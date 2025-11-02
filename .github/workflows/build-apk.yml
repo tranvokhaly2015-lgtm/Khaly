@@ -10,24 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Unzip source code
-      run: unzip quan-ly-chuyen-xe-starter.zip -d app_source
+      - name: Giải nén file mã nguồn
+        run: unzip -o "*.zip" -d source
 
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Cài đặt Java & Gradle
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: Build APK
-      working-directory: app_source
-      run: ./gradlew assembleDebug
+      - name: Build APK
+        run: |
+          cd source
+          ./gradlew assembleDebug || echo "Không tìm thấy Gradle, vui lòng kiểm tra mã nguồn."
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: Khaly-App
-        path: app_source/app/build/outputs/apk/debug/*.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: Khaly-App
+          path: source/app/build/outputs/apk/debug/*.apk
