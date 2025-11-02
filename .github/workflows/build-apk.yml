@@ -28,7 +28,7 @@ jobs:
           ./gradlew assembleDebug || echo "Không tìm thấy Gradle, vui lòng kiểm tra mã nguồn."
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: Khaly-App
-          path: source/app/build/outputs/apk/debug/*.apk
+  uses: actions/upload-artifact@v4
+  with:
+    name: Khaly-App
+    path: source/app/build/outputs/apk/debug/*.apk
